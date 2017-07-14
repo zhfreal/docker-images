@@ -4,7 +4,9 @@ MAINTAINER "Arukas Team <support@arukas.io>"
 
 ENV AUTHORIZED_KEYS ***YOUR_AUTHORIZED_KEYS***
 
-RUN apk add --update openssh pwgen && \
+RUN apk update && \
+    apk upgrade && \
+    apk add openssh pwgen && \
     rm -rf /var/cache/apk/*
 
 COPY entrypoint.sh .
