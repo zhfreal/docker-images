@@ -1,0 +1,28 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  cache_directories:
+    - "~/docker"
+  override:
+    - docker info
+    - if [[ -e ~/docker/image.tar ]]; then docker load --input ~/docker/image.tar; fi
+    - docker build -t iesoft/shadowsocks .
+    - mkdir -p ~/docker
+    - docker save iesoft/shadowsocks > ~/docker/image.tar
+
+test:
+  override:
+    - docker run iesoft/shadowsocks head -1 /etc/issue
+    - docker run iesoft/shadowsocks ls -al /usr/sbin/sshd
+    - docker run iesoft/shadowsocks ls -al entrypoint.sh
+    - docker run iesoft/shadowsocks ls -al keygen.sh
+    - docker run iesoft/shadowsocks ls -al pwgen.sh
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push iesoft/shadowsocks
