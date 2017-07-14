@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-MAINTAINER "Arukas Team <support@arukas.io>"
+MAINTAINER " IESoft Team <zhfreal@gmail.com>"
 
 ENV AUTHORIZED_KEYS ***YOUR_AUTHORIZED_KEYS***
 ENV TZ 'Asia/Shanghai'
